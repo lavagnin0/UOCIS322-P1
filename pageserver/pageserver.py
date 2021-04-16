@@ -99,7 +99,8 @@ def respond(sock):
                 path = options.DOCROOT + parts[1]
                 with open(path) as f:
                     transmit(STATUS_OK, sock)
-                    transmit(f, sock)
+                    for line in f:
+                        transmit(line, sock)
             except FileNotFoundError:
                 transmit(STATUS_NOT_FOUND, sock)
     else:
