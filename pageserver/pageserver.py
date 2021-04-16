@@ -91,8 +91,13 @@ def respond(sock):
 
     parts = request.split()
     if len(parts) > 1 and parts[0] == "GET":
-        transmit(STATUS_OK, sock)
-        transmit(CAT, sock)
+        try:
+            path = options.DOCROOT + parts[1:]
+            transmit(STATUS_OK, sock)
+            with open(path) as f:
+                transmit(f, sock)
+        except FileNotFoundError:
+            transmit(STATUS_NOT_FOUND, sock)
     else:
         log.info("Unhandled request: {}".format(request))
         transmit(STATUS_NOT_IMPLEMENTED, sock)
