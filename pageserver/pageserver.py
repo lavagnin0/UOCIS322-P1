@@ -91,7 +91,7 @@ def respond(sock):
 
     parts = request.split()
     if len(parts) > 1 and parts[0] == "GET":
-        if ".." in parts[1] or "~" in parts[1] or "//" in parts[1] or parts[1][1] == "/":
+        if ".." in parts[1] or "~" in parts[1] or "//" in parts[1]:
             transmit(STATUS_FORBIDDEN, sock)
         else:
             try:
